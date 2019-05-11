@@ -4,18 +4,18 @@ class GameObject extends HTMLElement {
         super();
         this.x = 0;
         this.y = 0;
+        this.scaleX = 1;
         game.appendChild(this);
     }
-    getRectangle() { return this.getBoundingClientRect(); }
     update() {
         this.draw();
     }
     draw() {
-        this.style.transform = `translate(${this.x}px, ${this.y}px)`;
+        this.style.transform = `translate(${this.x}px, ${this.y}px) scaleX(${this.scaleX})`;
     }
     checkCollision(target) {
-        let a = this.getRectangle();
-        let b = target.getRectangle();
+        let a = this.getBoundingClientRect();
+        let b = target.getBoundingClientRect();
         return (a.left <= b.right &&
             b.left <= a.right &&
             a.top <= b.bottom &&
@@ -28,8 +28,10 @@ class Apple extends GameObject {
         super(game);
         this.speed = 4;
         this.fall = false;
-        this.x = x;
-        this.y = y;
+        this.startX = 0;
+        this.startY = 0;
+        this.startX = this.x = x;
+        this.startY = this.y = y;
         this.draw();
         document.addEventListener('init', () => this.init());
     }
@@ -40,13 +42,68 @@ class Apple extends GameObject {
         if (this.fall) {
             this.y += this.speed;
         }
+        if (this.y > window.innerHeight) {
+            this.respawn();
+        }
         super.update();
+    }
+    respawn() {
+        this.x = this.startX;
+        this.y = this.startY;
+        this.fall = false;
+        this.init();
     }
     onCollision() {
         this.remove();
     }
 }
 window.customElements.define("apple-component", Apple);
+class Bird extends GameObject {
+    constructor(game) {
+        super(game);
+        this.direction = 0;
+        this.speed = 4;
+        this.goUpdate = false;
+        this.init();
+    }
+    get X() { return this.x; }
+    get Right() { return this.x + this.clientWidth; }
+    init() {
+        if (Math.random() < 0.5) {
+            this.x = -this.clientWidth + 1;
+            this.direction = 1;
+            this.scaleX = -1;
+        }
+        else {
+            this.x = window.innerWidth - 1;
+            this.direction = -1;
+            this.scaleX = 1;
+        }
+        this.y = Math.random() * window.innerHeight * 0.3;
+        this.goUpdate = false;
+        setTimeout(() => {
+            this.goUpdate = true;
+        }, (Math.floor(Math.random() * 10) + 2) * 1000);
+        this.draw();
+    }
+    update() {
+        if (this.goUpdate) {
+            this.x += this.speed * this.direction;
+            super.update();
+        }
+    }
+}
+window.customElements.define("bird-component", Bird);
+class Button extends GameObject {
+    constructor(game, text, x, y) {
+        super(game);
+        this.innerHTML = text;
+        this.x = x - this.clientWidth / 2;
+        this.y = y - this.clientHeight / 2;
+        this.draw();
+    }
+}
+window.customElements.define("button-component", Button);
 class Game {
     constructor() {
         this.gameObjects = [];
@@ -63,6 +120,12 @@ class Game {
         this.gameObjects.push(new Apple(game, 700, 150));
         this.gameObjects.push(new Apple(game, 750, 280));
         this.gameObjects.push(new Apple(game, 800, 300));
+        this.gameObjects.push(new Bird(game));
+        let startButton = new Button(game, "START", window.innerWidth / 2, window.innerHeight / 2);
+        startButton.addEventListener("click", () => {
+            document.dispatchEvent(new Event('init'));
+            startButton.remove();
+        });
         this.joystick = new Joystick(6);
         document.addEventListener("button1", () => this.handleButton1Click());
         document.addEventListener("button2", () => this.jump());
@@ -79,13 +142,19 @@ class Game {
                 o.Left = this.joystick.Left;
                 o.Right = this.joystick.Right;
                 this.gameObjects.forEach(secondObject => {
-                    if (o !== secondObject) {
+                    if (secondObject instanceof Apple) {
                         if (o.checkCollision(secondObject)) {
                             o.onCollision();
                             secondObject.onCollision();
                         }
                     }
                 });
+            }
+            if (o instanceof Bird) {
+                let bird = o;
+                if (bird.Right <= 0 || bird.X >= window.innerWidth) {
+                    o.init();
+                }
             }
             o.update();
         });
@@ -204,7 +273,6 @@ class Kikker extends GameObject {
         this.sound = document.getElementsByTagName("audio")[0];
         this.sound.src = this.audioFiles[0];
         this.sound.play();
-        this.sound.addEventListener("ended", () => { document.dispatchEvent(new Event('init')); });
     }
     set Left(value) { this.left = value; }
     set Right(value) { this.right = value; }

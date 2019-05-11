@@ -102,11 +102,7 @@ class DebugPanel extends HTMLElement{
             this.shadowRoot.appendChild(temp);
             
         }
-
         
-        // let game = document.getElementsByTagName("game")[0]
-        // game.appendChild(this)
-
         document.body.append(this)
     }
 

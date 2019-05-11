@@ -3,8 +3,8 @@ class GameObject extends HTMLElement {
     protected x : number = 0
     protected y : number = 0
 
-    public getRectangle() { return this.getBoundingClientRect() }
-
+    protected scaleX : number = 1
+    
     constructor(game:Element) {
         super()
         
@@ -16,12 +16,12 @@ class GameObject extends HTMLElement {
     }
 
     protected draw() {
-        this.style.transform = `translate(${this.x}px, ${this.y}px)`
+        this.style.transform = `translate(${this.x}px, ${this.y}px) scaleX(${this.scaleX})`
     }
 
-    public checkCollision(target : GameObject) : boolean {
-        let a = this.getRectangle()
-        let b = target.getRectangle()
+    public checkCollision(target : Element) : boolean {
+        let a = this.getBoundingClientRect()
+        let b = target.getBoundingClientRect()
         return (
             a.left <= b.right &&
             b.left <= a.right &&

@@ -1,7 +1,7 @@
 body {
     margin:             0px; 
     padding:            0px;
-    font-family:        sans-serif
+    font-family:        sans-serif;
 }
 
 game, game * {
@@ -27,6 +27,18 @@ apple-component {
     width:              56px;
     height:             62px;
     background-image:   url('../images/apple.png');
+}
+bird-component {
+    width:              396px;
+    height:             268px;
+    background-image:   url('../images/bird.png');
+}
+button-component {
+    font-family:        'Permanent Marker', cursive;
+    color:              white;
+    font-size:          60px; 
+    -webkit-text-stroke: 3px #e15349;  
+    cursor:             pointer; 
 }
 .bounding {
     width:              170px;

@@ -39,7 +39,7 @@ class Kikker extends GameObject {
         this.sound.src = this.audioFiles[0]
         this.sound.play()
         
-        this.sound.addEventListener("ended", () => { document.dispatchEvent(new Event('init')) })
+        // this.sound.addEventListener("ended", () => { document.dispatchEvent(new Event('init')) })
     }
 
     public update() {
