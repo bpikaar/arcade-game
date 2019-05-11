@@ -20,13 +20,19 @@ game {
 kikker-component {
     width:              261px;
     height:             269px;
-    background-image:   url('../images/kikker.png');
+    background-image:   url('../images/kikker_glow.png');
 }
 
 apple-component {
     width:              56px;
     height:             62px;
     background-image:   url('../images/apple.png');
+}
+.bounding {
+    width:              170px;
+    height:             20px;
+    top:                90px;
+    /* background-color: yellow; */
 }
 /* ---------- START DEBUG PANEL ---------- */
 debug-panel {

@@ -9,8 +9,7 @@ class Kikker extends GameObject {
 
     private sound : HTMLAudioElement
 
-    public set Left(value : boolean)    { this.left     = value }
-    public set Right(value : boolean)   { this.right    = value }   
+    private boundingRect : HTMLElement
 
     private audioFiles = [
         "audio/apples.m4a",
@@ -20,6 +19,11 @@ class Kikker extends GameObject {
         "audio/laugh3.m4a"
     ];
 
+    public set Left(value : boolean)    { this.left     = value }
+    public set Right(value : boolean)   { this.right    = value }   
+
+    public getRectangle() { return this.boundingRect.getBoundingClientRect() }
+
     constructor(game:Element) {
         super(game)
 
@@ -27,19 +31,15 @@ class Kikker extends GameObject {
         this.y = 741 - 269
         this.draw()
 
-        // we start preloading all the audio files
-        // for (let i in this.audioFiles) {
-        //     this.preloadAudio(this.audioFiles[i]);
-        // }
+        this.boundingRect = document.createElement('div')
+        this.boundingRect.classList.add('bounding')
+        this.appendChild(this.boundingRect)
 
         this.sound = document.getElementsByTagName("audio")[0]
         this.sound.src = this.audioFiles[0]
         this.sound.play()
         
         this.sound.addEventListener("ended", () => { document.dispatchEvent(new Event('init')) })
-
-        // var audio = new Audio('audio/apples.m4a');
-        // audio.play();
     }
 
     public update() {
