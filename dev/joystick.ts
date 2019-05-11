@@ -1,6 +1,6 @@
 class Joystick {
 
-    private readonly DEBUG : boolean = true;
+    private readonly DEBUG : boolean = false;
 
     // FIELDS
     // Buttons
@@ -24,19 +24,19 @@ class Joystick {
     // PROPERTIES
     // Axes
     public get Left() : boolean {
-        if(this.axes[0] == -1) return true
+        if(this.x == -1) return true
         return false
     }
     public get Right() : boolean {
-        if(this.axes[0] == 1) return true
+        if(this.x == 1) return true
         return false
     }
     public get Up() : boolean {
-        if(this.axes[1] == -1) return true
+        if(this.y == -1) return true
         return false
     }
     public get Down() : boolean {
-        if(this.axes[1] == 1) return true
+        if(this.y == 1) return true
         return false
     }
 

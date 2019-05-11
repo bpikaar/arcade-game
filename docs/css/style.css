@@ -1,18 +1,36 @@
 body {
     margin:             0px; 
     padding:            0px;
-    font-family: sans-serif
+    font-family:        sans-serif
 }
 
-game * {
+game, game * {
     position:           absolute;
     display:            block;
     box-sizing:         border-box;
     background-repeat:  no-repeat;
 }
 
+game {
+    width:              100vw;
+    height:             100vh;
+    background-image:   url('../images/background_1440x741.png');
+}
+
+kikker-component {
+    width:              261px;
+    height:             269px;
+    background-image:   url('../images/kikker.png');
+}
+
+apple-component {
+    width:              56px;
+    height:             62px;
+    background-image:   url('../images/apple.png');
+}
 /* ---------- START DEBUG PANEL ---------- */
 debug-panel {
+    position:           absolute;
     top:                10px;
     right:              10px;
 }

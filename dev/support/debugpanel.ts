@@ -86,7 +86,6 @@ class DebugPanel extends HTMLElement{
 
         this.rootElement = document.createElement('root')
         template.appendChild(this.rootElement)
-        console.log(template)
         
         // axes
         this.Axes = axes
@@ -105,8 +104,10 @@ class DebugPanel extends HTMLElement{
         }
 
         
-        let game = document.getElementsByTagName("game")[0]
-        game.appendChild(this)
+        // let game = document.getElementsByTagName("game")[0]
+        // game.appendChild(this)
+
+        document.body.append(this)
     }
 
     private createListenersForButtons() {
