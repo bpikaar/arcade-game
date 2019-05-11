@@ -41,9 +41,10 @@ button-component {
     cursor:             pointer; 
 }
 .bounding {
-    width:              170px;
-    height:             20px;
+    width:              140px;
+    height:             15px;
     top:                90px;
+    left:               10px;
     /* background-color: yellow; */
 }
 /* ---------- START DEBUG PANEL ---------- */

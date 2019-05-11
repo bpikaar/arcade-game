@@ -7,6 +7,7 @@ class GameObject extends HTMLElement {
         this.scaleX = 1;
         game.appendChild(this);
     }
+    getRectangle() { return this.getBoundingClientRect(); }
     update() {
         this.draw();
     }
@@ -14,8 +15,8 @@ class GameObject extends HTMLElement {
         this.style.transform = `translate(${this.x}px, ${this.y}px) scaleX(${this.scaleX})`;
     }
     checkCollision(target) {
-        let a = this.getBoundingClientRect();
-        let b = target.getBoundingClientRect();
+        let a = this.getRectangle();
+        let b = target.getRectangle();
         return (a.left <= b.right &&
             b.left <= a.right &&
             a.top <= b.bottom &&
