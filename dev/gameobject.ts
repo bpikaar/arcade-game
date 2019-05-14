@@ -1,9 +1,9 @@
 class GameObject extends HTMLElement {
     
-    protected x : number = 0
-    protected y : number = 0
-
-    protected scaleX : number = 1
+    protected x         : number = 0
+    protected y         : number = 0
+    protected scaleX    : number = 1
+    protected rotation  : number = 0
     
     public getRectangle() { return this.getBoundingClientRect() }
 
@@ -18,7 +18,7 @@ class GameObject extends HTMLElement {
     }
 
     protected draw() {
-        this.style.transform = `translate(${this.x}px, ${this.y}px) scaleX(${this.scaleX})`
+        this.style.transform = `translate(${this.x}px, ${this.y}px) scaleX(${this.scaleX}) rotate(${this.rotation}deg)`
     }
 
     public checkCollision(target : GameObject) : boolean {

@@ -40,12 +40,27 @@ button-component {
     -webkit-text-stroke: 3px #e15349;  
     cursor:             pointer; 
 }
+textfield {
+    font-size:          2em;
+    color:            white;
+    width:              530px;
+    text-shadow:        0px 3px 0px rgba(0,0,0,0.5);
+    transform:          translate(20px, 50px);
+}
 .bounding {
     width:              140px;
     height:             15px;
     top:                90px;
     left:               10px;
     /* background-color: yellow; */
+}
+apple-score {
+    width:              44px;
+    top:                25px;
+    left:               5px;
+    font-size:          1.2em;
+    color:              #eeffee;
+    text-align: center;
 }
 /* ---------- START DEBUG PANEL ---------- */
 debug-panel {

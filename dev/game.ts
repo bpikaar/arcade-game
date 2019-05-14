@@ -1,9 +1,20 @@
 class Game {
-    private joystick : Joystick
+    private joystick    : Joystick
 
     private gameObjects : GameObject[] = []
+
+    private textfield   : HTMLElement
+    private startButton : HTMLElement
+    private startFunction  : any
+
+    private score       : number
     constructor() {
         let game : Element = document.getElementsByTagName("game")[0]!
+
+        // score 
+        this.textfield = document.createElement("textfield")
+        this.textfield.innerHTML = "Appels: 0"
+        game.appendChild(this.textfield)
 
         // kikker
         this.gameObjects.push(new Kikker(game))
@@ -23,16 +34,20 @@ class Game {
         this.gameObjects.push(new Bird(game))
         
         // Start Button
-        let startButton = new Button(game, "START", window.innerWidth / 2, window.innerHeight / 2)
-        startButton.addEventListener("click", () => { 
-            document.dispatchEvent(new Event('init'))
-            // startButton.removeEventListener("click", startButton)
-            startButton.remove()
-        })
+        this.startButton = new Button(
+            game, 
+            "START", 
+            window.innerWidth / 2, 
+            window.innerHeight / 2)
+
+        this.startButton.addEventListener("click", () => this.startGame())
 
         // Joystick
         this.joystick = new Joystick(6)
-        document.addEventListener("button1", () => this.handleButton1Click())
+
+        // save the exact function in a variable for removal 
+        this.startFunction = () => this.startGame()
+        document.addEventListener("button1", this.startFunction)
         document.addEventListener("button2", () => this.jump())
         document.addEventListener("button3", () => console.log('Button 3 fired'))
         document.addEventListener("button4", () => console.log('Button 4 fired'))
@@ -40,6 +55,18 @@ class Game {
         document.addEventListener("button6", () => console.log('Button 6 fired'))
 
         this.gameLoop()
+    }
+
+    private startGame() {
+        console.log("Start game!")
+        document.dispatchEvent(new Event('init'))
+
+        document.removeEventListener("button1", this.startFunction)
+        this.startButton.removeEventListener("click", () => this.startGame())
+
+        console.log(document)
+        this.startButton.remove()
+        this.score = 0
     }
 
     private gameLoop() : void {
@@ -51,10 +78,13 @@ class Game {
                 (o as Kikker).Right = this.joystick.Right;
 
                 this.gameObjects.forEach(secondObject => {
+                    // Kikker has collision with a Apple
                     if(secondObject instanceof Apple) {
-                        if(o.checkCollision(secondObject)) {
+                        let apple = secondObject as Apple
+                        if(o.checkCollision(apple)) {
                             o.onCollision()
-                            secondObject.onCollision()
+                            apple.onCollision()
+                            this.scorePoint(apple.Score)
                         }
                     }
                 })
@@ -72,6 +102,10 @@ class Game {
         requestAnimationFrame(() => this.gameLoop())
     }
 
+    private scorePoint(points: number) {
+        this.score += points
+        this.textfield.innerHTML = "Appels: " + this.score
+    }
     private handleButton1Click() {
         console.log('Button 1 fired')
     }

@@ -62,6 +62,10 @@ class Joystick {
     }
 
     private onGamePadConnected(e:GamepadEvent) : void {
+        // The gamepadconnected event is fired when the browser detects that a gamepad has been connected 
+        // or the first time a button/axis of the gamepad is used.
+        // https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepadconnected_event 
+        
         if (this.DEBUG) { console.log('Game pad connected') }
         this.gamepad = e.gamepad
         this.previousGamepad = this.gamepad
@@ -69,6 +73,8 @@ class Joystick {
     }
 
     public update() : void {
+        //todo this.gamepad is the connected gamepad. need to re-query?
+        
         if(this.isConnected) {
             let gamepads = navigator.getGamepads()
             
