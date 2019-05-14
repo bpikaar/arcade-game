@@ -11,9 +11,15 @@ game, game * {
     background-repeat:  no-repeat;
 }
 
+.flex-container {
+    display:            flex;
+    justify-content:    space-around;
+}
+
 game {
-    width:              100vw;
-    height:             100vh;
+    width:              1440px;
+    height:             741px;
+    margin:             auto;
     background-image:   url('../images/background_1440x741.png');
 }
 

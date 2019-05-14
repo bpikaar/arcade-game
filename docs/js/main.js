@@ -141,7 +141,7 @@ class Game {
         this.gameObjects.push(new Apple(game, 750, 280));
         this.gameObjects.push(new Apple(game, 800, 300));
         this.gameObjects.push(new Bird(game));
-        this.startButton = new Button(game, "START", window.innerWidth / 2, window.innerHeight / 2);
+        this.startButton = new Button(game, "START", game.clientWidth / 2, game.clientHeight / 2);
         this.startButton.addEventListener("click", () => this.startGame());
         this.joystick = new Joystick(6);
         this.startFunction = () => this.startGame();

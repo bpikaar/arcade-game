@@ -37,8 +37,8 @@ class Game {
         this.startButton = new Button(
             game, 
             "START", 
-            window.innerWidth / 2, 
-            window.innerHeight / 2)
+            game.clientWidth / 2, 
+            game.clientHeight / 2)
 
         this.startButton.addEventListener("click", () => this.startGame())
 
