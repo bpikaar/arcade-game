@@ -1,7 +1,9 @@
-body {
+body, html {
     margin:             0px; 
     padding:            0px;
     font-family:        sans-serif;
+    overflow:           hidden;
+
 }
 
 game, game * {
@@ -21,6 +23,9 @@ game {
     height:             741px;
     margin:             auto;
     background-image:   url('../images/background_1440x741.png');
+    overflow:           hidden;
+    transform:          scale(0.889);
+    transform-origin:   top;
 }
 
 kikker-component {
